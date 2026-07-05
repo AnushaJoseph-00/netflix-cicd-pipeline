@@ -55,14 +55,22 @@ Deploys always come from the artifact store, never from the build workspace, so 
 
 Provisioning scripts for all four instances are in the infra folder.
 
+
+## AWS Instances
+
+![Live site](AWS_Instances.jpg)
+
+
 ## Future work
 
-- Move the pipeline script into an SCM-based Jenkinsfile (pipeline as code)
-- GitHub webhook trigger for push-to-deploy, with an Elastic IP on Jenkins
-- Test coverage reporting into SonarQube
-- A security scanning stage such as Trivy or a dependency audit
 - Zero-downtime deploys
 - Terraform and Ansible to replace user-data provisioning
+
+
+## Live Website
+
+![Live site](netflix-live-website.jpg)
+
 
 ## Credits
 
