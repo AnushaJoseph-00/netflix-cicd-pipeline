@@ -43,15 +43,20 @@ Deploys always come from the artifact store, never from the build workspace, so 
 
 ## Setup notes
 
-**Application.** Cloned a React and TMDB based Netflix clone. The upstream repository had its TMDB API key hardcoded and publicly exposed, so the key was moved to an environment variable, the .env file was gitignored, and the key is supplied by Jenkins credentials in CI.
+**Application** 
+-Cloned a React and TMDB based Netflix clone. The upstream repository had its TMDB API key hardcoded and publicly exposed, so the key was moved to an environment variable, the .env file was gitignored, and the key is supplied by Jenkins credentials in CI.
 
-**Jenkins.** Ubuntu 24.04 with Java 21, which Jenkins 2.543 and later requires. The repository was added with the current jenkins.io-2026 signing key. Plugins used: NodeJS, SonarQube Scanner, and SSH Agent. All secrets live in the Jenkins credentials store and are masked in logs.
+**Jenkins** 
+-Ubuntu 24.04 with Java 21, which Jenkins 2.543 and later requires. The repository was added with the current jenkins.io-2026 signing key. Plugins used: NodeJS, SonarQube Scanner, and SSH Agent. All secrets live in the Jenkins credentials store and are masked in logs.
 
-**SonarQube.** Kernel limits raised for Elasticsearch, a dedicated non-root service user, PostgreSQL as the backing store, a hand-written systemd unit, token authentication, and a webhook pointing at Jenkins's private IP.
+**SonarQube**
+-Kernel limits raised for Elasticsearch, a dedicated non-root service user, PostgreSQL as the backing store, a hand-written systemd unit, token authentication, and a webhook pointing at Jenkins's private IP.
 
-**Nexus.** Installed from Sonatype's versioned download, with a dedicated nexus service user, a systemd unit, and a raw hosted repository for the zip artifacts.
+**Nexus** 
+-Installed from Sonatype's versioned download, with a dedicated nexus service user, a systemd unit, and a raw hosted repository for the zip artifacts.
 
-**App server.** nginx and unzip only.
+**App server** 
+-nginx and unzip only.
 
 Provisioning scripts for all four instances are in the infra folder.
 
