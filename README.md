@@ -107,7 +107,7 @@ Provisioning scripts for all four instances are in the infra folder.
   rather than one machine doing everything
 - **The operational reality**: version requirements changing under you, download
   endpoints moving, memory pressure, firewall rules, and credential management —
-  the day-to-day texture of platform engineering, not just the happy path
+  the day-to-day texture of platform engineering
 
 
 ## Credits
