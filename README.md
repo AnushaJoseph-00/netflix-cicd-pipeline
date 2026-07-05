@@ -13,7 +13,7 @@ End-to-end CI/CD pipeline built from scratch on AWS using Jenkins, SonarQube, Ne
 7. The app server fetches the artifact from Nexus
 8. End users browse the live site over HTTP
 
-## Infrastructure
+## AWS Infrastructure
 
 - **Jenkins server** – EC2 t3.medium, port 8080. Runs Jenkins on Java 21, with the NodeJS 16 toolchain, sonar-scanner, and zip.
 - **SonarQube server** – EC2 t3.medium, port 9000. Runs SonarQube on Java 21 with a PostgreSQL backing database.
@@ -24,22 +24,24 @@ All server-to-server traffic uses private IPs with security-group-to-security-gr
 
 ## Pipeline stages
 
-1. **Checkout** – clone the source from this repository
-2. **Install Dependencies** – npm install, with a deterministic dependency tree via a committed lockfile and an eslint override
-3. **Unit Tests** – Jest smoke tests; a failing test blocks the build
-4. **Sonar Code Analysis** – sonar-scanner CLI, with node_modules and build excluded from the scan
-5. **Quality Gate** – the pipeline waits for SonarQube's verdict and aborts on failure; resolves in under a second via the webhook
-6. **Build** – npm run build, with the TMDB API key injected from Jenkins credentials at build time
-7. **Upload to Nexus** – the build folder is zipped with the build number in the filename and uploaded to the raw repository
-8. **Deploy** – Jenkins connects to the app server over SSH; the app server pulls the artifact from Nexus and unzips it into the nginx web root
+## Pipeline stages
+
+1. **Checkout** – Jenkins downloads the latest code from GitHub
+2. **Install Dependencies** – downloads all the libraries the app needs (npm install)
+3. **Unit Tests** – runs automated tests; if any test fails, the pipeline stops here
+4. **Sonar Code Analysis** – SonarQube scans the code for bugs, security issues, and bad practices
+5. **Quality Gate** – SonarQube gives a pass or fail verdict; a fail stops the pipeline
+6. **Build** – compiles the app into production-ready files, with the API key added securely from Jenkins credentials
+7. **Upload to Nexus** – the built app is zipped, given a version number, and stored in Nexus
+8. **Deploy** – the app server downloads the zip from Nexus and puts it live on the website
 
 Deploys always come from the artifact store, never from the build workspace, so any stored version can be redeployed. Rolling back means deploying an older zip.
 
 ## Setup notes
 
-**Application.** Cloned a React and TMDB based Netflix clone. The upstream repository had its TMDB API key hardcoded and publicly exposed, so the key was moved to an environment variable, the .env file was gitignored, and the key is supplied by Jenkins credentials in CI. Node is pinned to version 16 because the app's webpack 4 era code fails on modern OpenSSL.
+**Application.** Cloned a React and TMDB based Netflix clone. The upstream repository had its TMDB API key hardcoded and publicly exposed, so the key was moved to an environment variable, the .env file was gitignored, and the key is supplied by Jenkins credentials in CI.
 
-**Jenkins.** Ubuntu 24.04 with Java 21, which Jenkins 2.543 and later requires. The repository was added with the current jenkins.io-2026 signing key. Plugins used: NodeJS, SonarQube Scanner, and SSH Agent. Toolchains for Node 16 and sonar-scanner are declared per pipeline and installed automatically by Jenkins. All secrets live in the Jenkins credentials store and are masked in logs.
+**Jenkins.** Ubuntu 24.04 with Java 21, which Jenkins 2.543 and later requires. The repository was added with the current jenkins.io-2026 signing key. Plugins used: NodeJS, SonarQube Scanner, and SSH Agent. All secrets live in the Jenkins credentials store and are masked in logs.
 
 **SonarQube.** Kernel limits raised for Elasticsearch, a dedicated non-root service user, PostgreSQL as the backing store, a hand-written systemd unit, token authentication, and a webhook pointing at Jenkins's private IP.
 
