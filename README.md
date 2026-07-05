@@ -28,8 +28,6 @@ All server-to-server traffic uses private IPs with security-group-to-security-gr
 
 ![Pipeline all green](Pipeline_Jenkins.jpg)
 
-## Pipeline stages
-
 1. **Checkout** – Jenkins downloads the latest code from GitHub
 2. **Install Dependencies** – downloads all the libraries the app needs (npm install)
 3. **Unit Tests** – runs automated tests; if any test fails, the pipeline stops here
@@ -40,6 +38,9 @@ All server-to-server traffic uses private IPs with security-group-to-security-gr
 8. **Deploy** – the app server downloads the zip from Nexus and puts it live on the website
 
 Deploys always come from the artifact store, never from the build workspace, so any stored version can be redeployed. Rolling back means deploying an older zip.
+
+Pipeline-as-a-code is inside the Jenkinsfile.
+
 
 ## Setup notes
 
