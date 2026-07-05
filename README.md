@@ -95,7 +95,7 @@ Provisioning scripts for all four instances are in the infra folder.
 - **Networks are locked down by identity** – services talk over private IPs with
   security-group-to-security-group rules; only the app server's port 80 faces the internet
 
-## What this mirrors in a real engineering team
+## What this mirrors in a real-time work
 
 - **The workflow**: developer pushes code, automation takes over, and a tested,
   scanned, versioned release reaches a server with no manual steps in between —
