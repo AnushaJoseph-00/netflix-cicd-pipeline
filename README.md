@@ -4,6 +4,9 @@ End-to-end CI/CD pipeline built from scratch on AWS using Jenkins, SonarQube, Ne
 
 ## How it works
 
+![Live site](Architecture.jpg)
+
+
 1. Developer pushes code to GitHub
 2. Jenkins clones the source (Checkout stage)
 3. Jenkins sends the code to SonarQube for static analysis
@@ -23,6 +26,8 @@ End-to-end CI/CD pipeline built from scratch on AWS using Jenkins, SonarQube, Ne
 All server-to-server traffic uses private IPs with security-group-to-security-group rules: Jenkins to SonarQube on 9000, SonarQube to Jenkins on 8080 for the webhook, Jenkins to Nexus on 8081, app server to Nexus on 8081, and Jenkins to the app server on 22. Only the app server's port 80 is open to the internet.
 
 ## Pipeline stages
+
+![Pipeline all green](Pipeline_Jenkins.jpg)
 
 ## Pipeline stages
 
