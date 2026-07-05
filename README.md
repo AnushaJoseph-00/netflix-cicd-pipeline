@@ -4,9 +4,6 @@ End-to-end CI/CD pipeline built from scratch on AWS using Jenkins, SonarQube, Ne
 
 ## How it works
 
-![Live site](Architecture.jpg)
-
-
 1. Developer pushes code to GitHub
 2. Jenkins clones the source (Checkout stage)
 3. Jenkins sends the code to SonarQube for static analysis
@@ -15,6 +12,8 @@ End-to-end CI/CD pipeline built from scratch on AWS using Jenkins, SonarQube, Ne
 6. Jenkins sends the deploy command to the app server over SSH
 7. The app server fetches the artifact from Nexus
 8. End users browse the live site over HTTP
+
+![Live site](Architecture.jpg)
 
 ## AWS Infrastructure
 
