@@ -78,6 +78,38 @@ Provisioning scripts for all four instances are in the infra folder.
 ![Live site](netflix-live-website.jpg)
 
 
+## Key takeaways
+
+- **Pipeline as code** – the entire build, test, and deploy process is defined in a
+  Jenkinsfile stored in this repository, not clicked together in a UI
+- **Quality is enforced, not optional** – a failing unit test or a failed SonarQube
+  quality gate stops the pipeline before anything is built or deployed
+- **Artifacts are versioned and immutable** – every build produces a numbered zip in
+  Nexus; deploys always come from the artifact store, so any version can be redeployed
+  and rollback is just deploying an older build
+- **Secrets never touch the code** – the API key, Nexus credentials, and SSH keys all
+  live in the Jenkins credentials store and are injected at runtime, masked in logs
+- **Infrastructure is documented and reproducible** – every server was built from a
+  provisioning script kept in this repo; the servers are disposable, the repo is the
+  source of truth
+- **Networks are locked down by identity** – services talk over private IPs with
+  security-group-to-security-group rules; only the app server's port 80 faces the internet
+
+## What this mirrors in a real engineering team
+
+- **The workflow**: developer pushes code, automation takes over, and a tested,
+  scanned, versioned release reaches a server with no manual steps in between —
+  the same shape as production delivery pipelines at any software company
+- **The toolchain**: Jenkins, SonarQube, and Nexus (or their equivalents like GitHub
+  Actions, and Artifactory) are the standard enterprise CI/CD stack
+- **The separation of concerns**: a build server, a quality server, an artifact store,
+  and a deploy target as independent services — how real platforms are structured,
+  rather than one machine doing everything
+- **The operational reality**: version requirements changing under you, download
+  endpoints moving, memory pressure, firewall rules, and credential management —
+  the day-to-day texture of platform engineering, not just the happy path
+
+
 ## Credits
 
 UI based on a React and TMDB Netflix clone by vishnusatheeshpulickal. This project is the CI/CD pipeline, infrastructure, and automation built around it.
