@@ -45,7 +45,7 @@ Pipeline-as-a-code is inside the Jenkinsfile.
 ## Setup notes
 
 **Application** 
--Cloned a React and TMDB based Netflix clone. The upstream repository had its TMDB API key hardcoded and publicly exposed, so the key was moved to an environment variable, the .env file was gitignored, and the key is supplied by Jenkins credentials in CI.
+- Cloned a React and TMDB based Netflix clone. The upstream repository had its TMDB API key hardcoded and publicly exposed, so the key was moved to an environment variable, the .env file was gitignored, and the key is supplied by Jenkins credentials in CI.
 
 
 **Jenkins**
