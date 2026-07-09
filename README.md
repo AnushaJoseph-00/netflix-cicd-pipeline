@@ -82,7 +82,7 @@ Provisioning scripts for all four instances are in the infra folder.
 
 - **Pipeline as code** – the entire build, test, and deploy process is defined in a
   Jenkinsfile stored in this repository, not clicked together in a UI
-- **Quality is enforced, not optional** – a failing unit test or a failed SonarQube
+- **Quality is enforced** – a failing unit test or a failed SonarQube
   quality gate stops the pipeline before anything is built or deployed
 - **Artifacts are versioned and immutable** – every build produces a numbered zip in
   Nexus; deploys always come from the artifact store, so any version can be redeployed
@@ -105,10 +105,8 @@ Provisioning scripts for all four instances are in the infra folder.
 - **The separation of concerns**: a build server, a quality server, an artifact store,
   and a deploy target as independent services — how real platforms are structured,
   rather than one machine doing everything
-- **The operational reality**: version requirements changing under you, download
-  endpoints moving, memory pressure, firewall rules, and credential management —
-  the day-to-day texture of platform engineering
-
+- **The operational reality**: version requirements, download
+  endpoints moving, memory pressure, firewall rules, and credential management
 
 ## Credits
 
